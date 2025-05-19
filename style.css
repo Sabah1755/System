@@ -1,0 +1,10 @@
+
+body { background:#111; color:#fff; font-family:sans-serif; padding:20px; }
+header, nav { background:#222; padding:10px; text-align:center; }
+nav a { color:#0af; margin:0 10px; text-decoration:none; }
+h1, h2 { color:#0af; }
+input, textarea, button {
+  margin:10px 0; padding:10px; width:90%; max-width:400px;
+  display:block; border:none; border-radius:5px;
+}
+button { background:#0af; color:#fff; cursor:pointer; }
