@@ -2,18 +2,32 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Kayıt Ol</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h2>Kayıt Formu</h2>
-  <form>
-    <input type="text" placeholder="Ad Soyad" required><br>
-    <input type="email" placeholder="E-Posta" required><br>
-    <input type="text" placeholder="T.C. Kimlik No"><br>
-    <label><input type="checkbox"> T.C. vatandaşı değilim</label><br>
+  <form id="registerForm">
+    <input type="text" id="name" placeholder="Ad Soyad" required>
+    <input type="email" id="email" placeholder="E-Posta" required>
+    <input type="text" id="tc" placeholder="T.C. Kimlik No">
+    <label><input type="checkbox" id="notCitizen"> T.C. vatandaşı değilim</label>
     <button type="submit">Kayıt Ol</button>
   </form>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      let kayitlar = JSON.parse(localStorage.getItem('kayitlar') || "[]");
+      kayitlar.push({
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        tc: document.getElementById('notCitizen').checked ? "Yabancı" : document.getElementById('tc').value
+      });
+      localStorage.setItem('kayitlar', JSON.stringify(kayitlar));
+      alert("Kayıt alındı, teşekkürler.");
+      this.reset();
+    });
+  </script>
 </body>
 </html>

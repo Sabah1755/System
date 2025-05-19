@@ -2,17 +2,31 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>VIP Bağış Talebi</title>
+  <meta charset="UTF-8" />
+  <title>VIP Talep</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h2>VIP Bağış Talebi</h2>
-  <form>
-    <input type="text" placeholder="Ad Soyad" required><br>
-    <input type="text" placeholder="İletişim (E-posta veya Tel)" required><br>
-    <textarea placeholder="Mesajınız" required></textarea><br>
+  <form id="vipForm">
+    <input type="text" id="vipName" placeholder="Ad Soyad" required>
+    <input type="text" id="vipContact" placeholder="İletişim (E-posta / Tel)" required>
+    <textarea id="vipMessage" placeholder="Mesajınız" required></textarea>
     <button type="submit">Gönder</button>
   </form>
+  <script>
+    document.getElementById('vipForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      let vipList = JSON.parse(localStorage.getItem('vipList') || "[]");
+      vipList.push({
+        name: document.getElementById('vipName').value,
+        contact: document.getElementById('vipContact').value,
+        message: document.getElementById('vipMessage').value
+      });
+      localStorage.setItem('vipList', JSON.stringify(vipList));
+      alert("VIP talebiniz alınmıştır.");
+      this.reset();
+    });
+  </script>
 </body>
 </html>

@@ -2,12 +2,56 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Admin Panel</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h2>Yönetici Paneli</h2>
-  <p>Bu panel şifreli erişimlidir. Yalnızca yetkili giriş yapabilir.</p>
+  <h2>Admin Giriş</h2>
+  <div id="loginBox">
+    <input type="text" id="username" placeholder="Kullanıcı Adı">
+    <input type="password" id="password" placeholder="Şifre">
+    <button onclick="login()">Giriş Yap</button>
+  </div>
+
+  <div id="adminPanel" class="hidden">
+    <h2>Kayıtlar</h2>
+    <table id="kayitTable"><tr><th>Ad</th><th>E-posta</th><th>TC</th></tr></table>
+
+    <h2>VIP Talepler</h2>
+    <table id="vipTable"><tr><th>Ad</th><th>İletişim</th><th>Mesaj</th></tr></table>
+
+    <h2>Günlük Gelir</h2>
+    <p>Simülasyon: $<span id="gelir">10.00</span></p>
+  </div>
+
+  <script>
+    function login() {
+      let user = document.getElementById("username").value;
+      let pass = document.getElementById("password").value;
+      if(user === "Sabahapo55" && pass === "ApoMelis171123") {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("adminPanel").classList.remove("hidden");
+
+        let kayitlar = JSON.parse(localStorage.getItem('kayitlar') || "[]");
+        let table1 = document.getElementById("kayitTable");
+        kayitlar.forEach(k => {
+          let row = table1.insertRow(); row.insertCell(0).innerText = k.name;
+          row.insertCell(1).innerText = k.email; row.insertCell(2).innerText = k.tc;
+        });
+
+        let vipler = JSON.parse(localStorage.getItem('vipList') || "[]");
+        let table2 = document.getElementById("vipTable");
+        vipler.forEach(v => {
+          let row = table2.insertRow(); row.insertCell(0).innerText = v.name;
+          row.insertCell(1).innerText = v.contact; row.insertCell(2).innerText = v.message;
+        });
+
+        document.getElementById("gelir").innerText = (kayitlar.length + vipler.length * 10).toFixed(2);
+      } else {
+        alert("Hatalı giriş!");
+      }
+    }
+  </script>
 </body>
 </html>
